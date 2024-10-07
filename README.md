@@ -1,11 +1,13 @@
 # Project-Time-Tracker
-Project time tracker written in Python
+Project time tracker written in Python.
 
-This script leverages
-Sqlite 3 to store data of projects and time spent on each as well as Tkinter for the graphical interface.
+This script leverages Sqlite 3 to store data of projects and time spent on each as well as Tkinter for the graphical interface.
 
 ### Features
 
-- Create as many projects as needed
+- Create as many projects as needed.
 - Track time by clicking a button to start counting time and another one to stop counting, increasing the total time spent.
-- Reset time spent on a project
+- Reset time spent on a project.
+
+#### Note
+A compiled version using pyinstaller can be found in the Release section.
