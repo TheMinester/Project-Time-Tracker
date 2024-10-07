@@ -10,7 +10,7 @@ start_time = None
 current_project_id = None
 
 # Database file path (same folder as the script)
-script_dir = os.path.dirname(os.path.abspath(__file__))
+script_dir = os.path.join(os.environ['USERPROFILE'],"AppData\\Local")
 db_file = os.path.join(script_dir, "projects.db")
 
 def create_connection(db_file):
