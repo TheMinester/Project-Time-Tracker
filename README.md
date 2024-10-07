@@ -10,4 +10,4 @@ This script leverages Sqlite 3 to store data of projects and time spent on each 
 - Reset time spent on a project.
 
 #### Note
-A compiled version using pyinstaller can be found in the Release section.
+A compiled version using pyinstaller can be found in the Releases section.
