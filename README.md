@@ -1,5 +1,5 @@
 # Project-Time-Tracker
-Project time tracker written in Python.
+Project time tracker written using Python 3.12.
 
 This script leverages Sqlite 3 to store data of projects and time spent on each as well as Tkinter for the graphical interface.
 
