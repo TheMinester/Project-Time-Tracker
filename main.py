@@ -206,14 +206,56 @@ def on_stop_counting_click(status_label, project_listbox):
     # Refresh the project list to reflect the updated time entries
     refresh_project_list(project_listbox)
 
+def delete_selected_project(project_listbox):
+    """ Delete the selected project """
+    selection = project_listbox.curselection()
+    if not selection:
+        messagebox.showwarning("Error", "Please select a project to delete.")
+        return
+
+    selected_index = selection[0]
+    project_info = project_listbox.get(selected_index)
+    project_id = project_info.split(":")[0]  # Get project_id from selected text
+
+    if messagebox.askyesno("Confirm Deletion", "Are you sure you want to delete this project? This will also delete its time entries."):
+        delete_project(project_id, project_listbox)
+
+def reset_selected_project_time(project_listbox):
+    """ Reset the time spent for the selected project """
+    selection = project_listbox.curselection()
+    if not selection:
+        messagebox.showwarning("Error", "Please select a project to reset time spent.")
+        return
+
+    selected_index = selection[0]
+    project_info = project_listbox.get(selected_index)
+    project_id = project_info.split(":")[0]  # Get project_id from selected text
+
+    if messagebox.askyesno("Confirm Reset", "Are you sure you want to reset the time spent for this project?"):
+        reset_time_spent(project_id, project_listbox)
+
 def show_project_selection_gui():
     """ Create the GUI window to list projects and manage time tracking """
     root = tk.Tk()
     root.title("Project Time Tracker")
+    root.minsize(600, 400)
+
+    # Create a frame to hold both the Listbox and Scrollbar
+    frame = tk.Frame(root)
+    frame.pack(fill="both", expand=True)
 
     # Create a Listbox widget to display projects
-    project_listbox = tk.Listbox(root, width=50, height=10)
-    project_listbox.pack(pady=20)
+    scrollbar = tk.Scrollbar(frame, orient="vertical")
+    project_listbox = tk.Listbox(frame, width=50, height=10, yscrollcommand=scrollbar.set)
+    scrollbar.config(command=project_listbox.yview)
+
+    # Use grid to align the Listbox and Scrollbar properly
+    project_listbox.grid(row=0, column=0, sticky="nsew")
+    scrollbar.grid(row=0, column=1, sticky="ns")
+
+    # Configure the grid to make the Listbox expand with the window
+    frame.grid_rowconfigure(0, weight=1)
+    frame.grid_columnconfigure(0, weight=1)
 
     # Populate the listbox with project names and total time spent
     refresh_project_list(project_listbox)
@@ -244,34 +286,6 @@ def show_project_selection_gui():
 
     # Run the GUI loop
     root.mainloop()
-
-def delete_selected_project(project_listbox):
-    """ Delete the selected project """
-    selection = project_listbox.curselection()
-    if not selection:
-        messagebox.showwarning("Error", "Please select a project to delete.")
-        return
-
-    selected_index = selection[0]
-    project_info = project_listbox.get(selected_index)
-    project_id = project_info.split(":")[0]  # Get project_id from selected text
-
-    if messagebox.askyesno("Confirm Deletion", "Are you sure you want to delete this project? This will also delete its time entries."):
-        delete_project(project_id, project_listbox)
-
-def reset_selected_project_time(project_listbox):
-    """ Reset the time spent for the selected project """
-    selection = project_listbox.curselection()
-    if not selection:
-        messagebox.showwarning("Error", "Please select a project to reset time spent.")
-        return
-
-    selected_index = selection[0]
-    project_info = project_listbox.get(selected_index)
-    project_id = project_info.split(":")[0]  # Get project_id from selected text
-
-    if messagebox.askyesno("Confirm Reset", "Are you sure you want to reset the time spent for this project?"):
-        reset_time_spent(project_id, project_listbox)
 
 if __name__ == "__main__":
     # First, setup the database (create tables if they don't exist)
